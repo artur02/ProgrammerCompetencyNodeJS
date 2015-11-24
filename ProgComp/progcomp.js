@@ -1,14 +1,20 @@
 "use strict";
 
 class ProgCompServer
-{
-	constructor(app) {
+{	
+	static get ROOTDIR(){
+		return "/ProgComp/";
+	}
+	
+	constructor(app, render) {
 		this.app = app;
+		this.render = render;
+		
 	}
 	
 	init(){
 		this.app.use(function *(){
-			this.body = 'Hello World :)';
+			yield this.render('ProgComp/Views/index.jade', {name: "World"});
 		});
 	}
 };
