@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/artur02/ProgrammerCompetencyNodeJS/issues"
   },
-  "homepage": "https://github.com/artur02/ProgrammerCompetencyNodeJS#readme"
+  "homepage": "https://github.com/artur02/ProgrammerCompetencyNodeJS#readme",
+  "dependencies": {
+    "koa": "^1.1.2"
+  }
 }
