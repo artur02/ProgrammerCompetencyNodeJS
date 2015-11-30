@@ -3,11 +3,14 @@
 const ProgCompServer = require('./ProgComp/progcomp')
 
 const nconf = require('nconf');
-const views = require('koa-views');
-const koa = require('koa');
-const app = koa();
 const storage = require('azure-storage');
 const winston = require('winston');
+
+const koa = require('koa');
+const views = require('koa-views');
+const serve = require('koa-static')
+const route = require('koa-route');
+
 
 // Configuration setup
 nconf
@@ -23,8 +26,12 @@ const logger = new (winston.Logger)({
       new (winston.transports.File)({ filename: 'serverlog.log' })
     ]
   });
-  
+
 logger.info('Application starting...');
+
+const app = koa();
+
+app.use(serve('./ProgComp/Scripts'));
 
 // Rendering engine setup
 var render = views('', {
@@ -42,7 +49,8 @@ const progComp = new ProgCompServer(
   { app: app, 
     render: render,
     config: nconf,
-    logger: logger
+    logger: logger,
+    route: route
   }, 
   {
     storage: storage,

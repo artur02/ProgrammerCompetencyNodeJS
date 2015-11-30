@@ -1,6 +1,7 @@
 "use strict";
 
 const BlobStorage = require('./blob');
+const fs = require('fs');
 
 class ProgCompServer
 {	
@@ -13,14 +14,22 @@ class ProgCompServer
 		this.app = web.app;
 		this.render = web.render;
 		this.storage = new BlobStorage(azure, web);
+		this.route = web.route;
 	}
 	
 	init() {
 		this.logger.info('Starting ProgComp module...');
 		
-		this.app.use(function *() {
-			yield this.render('ProgComp/Views/index.jade', {name: "World"});
-		});
+		let levels = this.loadLevelDesc();
+		
+		this.app.use(this.route.get('/', function *() {
+			yield this.render('ProgComp/Views/index.jade', {levels: levels});
+		}));
+	}
+	
+	loadLevelDesc() {
+		const levels = JSON.parse(fs.readFileSync('ProgComp/levels.json', 'utf8'));
+		return levels;
 	}
 };
 

@@ -1,1 +1,26 @@
-h1 Hello #{name}
+extends ./layout.jade
+block title
+	title Programmer Competency Matrix
+
+block content
+	h1 Programmer Competency Matrix
+	
+	div.table-responsive
+		table.table.table-striped.table-bordered#competency
+			thead
+				th
+				th
+				th Level 0
+				th Level 1
+				th Level 2
+				th Level 3
+			tbody
+				each category in levels
+					each subcategory in category.items
+						tr
+							td(data-class='category')= category.title
+							td(data-class='category')= subcategory.title
+							each level, idx in subcategory.items
+								td(data-class='description',data-value=idx)= level
+	
+	script(src="processor.js")
