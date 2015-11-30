@@ -15,11 +15,12 @@ block content
 				th Level 2
 				th Level 3
 			tbody
-				each category in levels
-					each subcategory in category.items
-						tr
-							td(data-class='category')= category.title
-							td(data-class='category')= subcategory.title
+				each category, cidx in levels
+					each subcategory, scidx in category.items
+						tr(data-cat=cidx)
+							if scidx==0
+								th(data-class='category', rowspan=category.items.length)= category.title
+							th(data-class='category')= subcategory.title
 							each level, idx in subcategory.items
 								td(data-class='description',data-value=idx)= level
 	

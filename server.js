@@ -32,6 +32,7 @@ logger.info('Application starting...');
 const app = koa();
 
 app.use(serve('./ProgComp/Scripts'));
+app.use(serve('./ProgComp/CSS'));
 
 // Rendering engine setup
 var render = views('', {
